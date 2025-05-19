@@ -1,78 +1,306 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+
+import axios from 'axios';
+
 import './styles/AddEmployee.css';
  
 const AddEmployee = ({ onAddEmployee }) => {
+
     const [formData, setFormData] = useState({
+
         name: '',
+
         title: '',
+
         salary: '',
+
         phone: '',
+
         email: '',
+
         animal: '',
+
         startDate: '',
+
         location: '',
+
         department: '',
-        skills: ''
+
+        skills: '',
+
     });
  
-    const navigate = useNavigate();
- 
     const handleChange = (e) => {
+
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+
+        setFormData({
+
+            ...formData,
+
+            [name]: value,
+
+        });
+
     };
  
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
  
+        const skillsArray = formData.skills.split(',').map((skill) => skill.trim());
+ 
         const newEmployee = {
-            id: Date.now(),
+
             ...formData,
-            salary: parseInt(formData.salary),
-            skills: formData.skills.split(',').map(skill => skill.trim())
+
+            skills: skillsArray,
+
+            salary: parseFloat(formData.salary),
+
+            startDate: formData.startDate,
+
+            id: Date.now(),
+
         };
  
-        onAddEmployee(newEmployee);
-        navigate('/');
+        try {
+
+            await axios.post('http://localhost:3001/employees', newEmployee);
+ 
+            onAddEmployee(newEmployee);
+
+            alert('Employee added successfully!');
+
+            setFormData({
+
+                name: '',
+
+                title: '',
+
+                salary: '',
+
+                phone: '',
+
+                email: '',
+
+                animal: '',
+
+                startDate: '',
+
+                location: '',
+
+                department: '',
+
+                skills: '',
+
+            });
+
+        } catch (error) {
+
+            console.error('Error adding employee:', error);
+
+            alert('There was an error adding the employee.');
+
+        }
+
     };
  
     return (
 <div className="form-wrapper">
 <h2 className="form-title">Add New Employee</h2>
-<form onSubmit={handleSubmit} className="employee-form">
-                {[
-                    ['name', 'Name'],
-                    ['title', 'Title'],
-                    ['salary', 'Salary (EUR)'],
-                    ['phone', 'Phone'],
-                    ['email', 'Email'],
-                    ['animal', 'Favorite Animal'],
-                    ['startDate', 'Start Date'],
-                    ['location', 'Location'],
-                    ['department', 'Department'],
-                    ['skills', 'Skills (comma-separated)']
-                ].map(([field, label]) => (
-<div className="form-group" key={field}>
-<label htmlFor={field}>{label}</label>
+<form className="employee-form" onSubmit={handleSubmit}>
+<div className="form-group">
+<label htmlFor="name">Name:</label>
 <input
-                            type={field === 'startDate' ? 'date' : 'text'}
-                            id={field}
-                            name={field}
-                            value={formData[field]}
-                            onChange={handleChange}
-                            required
-                        />
+
+                        type="text"
+
+                        id="name"
+
+                        name="name"
+
+                        value={formData.name}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
 </div>
-                ))}
+<div className="form-group">
+<label htmlFor="title">Title:</label>
+<input
+
+                        type="text"
+
+                        id="title"
+
+                        name="title"
+
+                        value={formData.title}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="salary">Salary:</label>
+<input
+
+                        type="number"
+
+                        id="salary"
+
+                        name="salary"
+
+                        value={formData.salary}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="phone">Phone:</label>
+<input
+
+                        type="text"
+
+                        id="phone"
+
+                        name="phone"
+
+                        value={formData.phone}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="email">Email:</label>
+<input
+
+                        type="email"
+
+                        id="email"
+
+                        name="email"
+
+                        value={formData.email}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="animal">Animal:</label>
+<input
+
+                        type="text"
+
+                        id="animal"
+
+                        name="animal"
+
+                        value={formData.animal}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="startDate">Start Date:</label>
+<input
+
+                        type="date"
+
+                        id="startDate"
+
+                        name="startDate"
+
+                        value={formData.startDate}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="location">Location:</label>
+<input
+
+                        type="text"
+
+                        id="location"
+
+                        name="location"
+
+                        value={formData.location}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="department">Department:</label>
+<input
+
+                        type="text"
+
+                        id="department"
+
+                        name="department"
+
+                        value={formData.department}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
+<div className="form-group">
+<label htmlFor="skills">Skills (comma separated):</label>
+<input
+
+                        type="text"
+
+                        id="skills"
+
+                        name="skills"
+
+                        value={formData.skills}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+</div>
  
-                <button type="submit" className="submit-btn">Add Employee</button>
+                <button type="submit" className="submit-btn">
+
+                    Add Employee
+</button>
 </form>
 </div>
+
     );
+
 };
  
 export default AddEmployee;
+ 

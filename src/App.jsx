@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import employeesData from './data/employees';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import PersonList from './PersonList';
 import Header from './Header';
 import Footer from './Footer';
-import About from './About';
 import AddEmployee from './AddEmployee';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/App.css';
+import About from './About';
  
 const App = () => {
-  const [employees, setEmployees] = useState(employeesData);
+  const [employees, setEmployees] = useState([]);
  
-  const handleAddEmployee = (newEmployee) => {
-    setEmployees((prev) => [...prev, newEmployee]);
-  };
+  useEffect(() => {
+    axios.get('http://localhost:3001/employees')
+      .then(res => setEmployees(res.data))
+      .catch(err => console.error("Fetch error:", err));
+  }, []);
  
   return (
 <Router>
@@ -21,10 +23,8 @@ const App = () => {
 <Routes>
 <Route path="/" element={<PersonList employees={employees} />} />
 <Route path="/about" element={<About />} />
-<Route
-          path="/add"
-          element={<AddEmployee onAddEmployee={handleAddEmployee} />}
-        />
+<Route path="/add" element={<AddEmployee onAddEmployee={setEmployees} />} />
+        {/* Add About page etc. here */}
 </Routes>
 <Footer />
 </Router>

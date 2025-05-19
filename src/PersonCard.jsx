@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 
-const animalEmoji = (animal) => {
-  const map = {
+const getAnimalEmoji = (animal) => {
+  const emojiMap = {
     Panther: '🐆',
     Koala: '🐨',
     Parrot: '🦜',
@@ -13,73 +13,51 @@ const animalEmoji = (animal) => {
     Meerkat: '🦫',
     Llama: '🦙',
   };
-
-  return map[animal] || '🐾';
+  return emojiMap[animal] || '🐾';
 };
 
-const yearCalculator = (startDate) => {
+const calculateYears = (startDate) => {
   const start = new Date(startDate);
-  const now = new Date();
+  const today = new Date();
 
-  let years = now.getFullYear() - start.getFullYear();
+  let years = today.getFullYear() - start.getFullYear();
+  const isAnniversaryPassed =
+    today.getMonth() > start.getMonth() ||
+    (today.getMonth() === start.getMonth() && today.getDate() >= start.getDate());
 
-  const anniversary =
-    now.getMonth() > start.getMonth() ||
-    (now.getMonth() === start.getMonth() && now.getDate() >= start.getDate());
-
-  if (!anniversary) {
-    years -= 1;
-  }
-
+  if (!isAnniversaryPassed) years -= 1;
   return years;
 };
 
 const PersonCard = ({ employee }) => {
-  const yearsWorked = yearCalculator(employee.startDate);
-  const dateDifference = new Date(employee.startDate) - new Date();
-  const monthDifference = dateDifference / (1000 * 60 * 60 * 24 * 30.44);
+  const yearsAtCompany = useMemo(() => calculateYears(employee.startDate), [employee.startDate]);
+  const monthsSinceStart = useMemo(() => {
+    const difference = new Date() - new Date(employee.startDate);
+    return difference / (1000 * 60 * 60 * 24 * 30.44);
+  }, [employee.startDate]);
 
-  let message = null;
-
-  if (yearsWorked > 0 && yearsWorked % 5 === 0) {
-    message = <p>🎉 Schedule recognition meeting.</p>;
-  } else if (monthDifference < 6) {
-    message = <p>🔔 Schedule probation review.</p>;
+  let notification = null;
+  if (yearsAtCompany > 0 && yearsAtCompany % 5 === 0) {
+    notification = <p>🎉 Schedule recognition meeting.</p>;
+  } else if (monthsSinceStart < 6) {
+    notification = <p>🔔 Schedule probation review.</p>;
   }
 
   return (
     <div className="card">
       <h2 className="name">
-        {employee.name} {animalEmoji(employee.animal)}
+        {employee.name} {getAnimalEmoji(employee.animal)}
       </h2>
       <div className="card-para">
-        <p>
-          <strong>Title:</strong> {employee.title}
-        </p>
-        <p>
-          <strong>Department:</strong> {employee.department}
-        </p>
-        <p>
-          <strong>Years Worked:</strong> {yearsWorked}
-        </p>
-
-        {message}
-
-        <p>
-          <strong>Location:</strong> {employee.location}
-        </p>
-        <p>
-          <strong>Email:</strong> {employee.email}
-        </p>
-        <p>
-          <strong>Phone:</strong> {employee.phone}
-        </p>
-        <p>
-          <strong>Salary:</strong> €{employee.salary}
-        </p>
-        <p>
-          <strong>Skills:</strong> {employee.skills.join(', ')}
-        </p>
+        <p><strong>Title:</strong> {employee.title}</p>
+        <p><strong>Department:</strong> {employee.department}</p>
+        <p><strong>Years Worked:</strong> {yearsAtCompany}</p>
+        {notification}
+        <p><strong>Location:</strong> {employee.location}</p>
+        <p><strong>Email:</strong> {employee.email}</p>
+        <p><strong>Phone:</strong> {employee.phone}</p>
+        <p><strong>Salary:</strong> €{employee.salary}</p>
+        <p><strong>Skills:</strong> {employee.skills.join(', ')}</p>
       </div>
     </div>
   );
