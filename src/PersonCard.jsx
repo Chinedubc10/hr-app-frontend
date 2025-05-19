@@ -1,69 +1,85 @@
 import { useState } from 'react';
 
-const animalEmojis = {
-  Panther: '🐆',
-  Koala: '🐨',
-  Parrot: '🦜',
-  Otter: '🦦',
-  Lynx: '🐈‍⬛',
-  Walrus: '🦭',
-  Tortoise: '🐢',
-  Flamingo: '🦩',
-  Meerkat: '🦫',
-  Llama: '🦙'
+const animalEmoji = (animal) => {
+  const map = {
+    Panther: '🐆',
+    Koala: '🐨',
+    Parrot: '🦜',
+    Otter: '🦦',
+    Lynx: '🐈‍⬛',
+    Walrus: '🦭',
+    Tortoise: '🐢',
+    Flamingo: '🦩',
+    Meerkat: '🦫',
+    Llama: '🦙',
+  };
+
+  return map[animal] || '🐾';
 };
 
-function getAnimalEmoji(animal) {
-  return animalEmojis[animal] || '🐾'; 
-}
-
-function calculateYearsEmployed(startDate) {
+const yearCalculator = (startDate) => {
   const start = new Date(startDate);
   const now = new Date();
 
   let years = now.getFullYear() - start.getFullYear();
 
-  const hasHadAnniversaryThisYear =
+  const anniversary =
     now.getMonth() > start.getMonth() ||
     (now.getMonth() === start.getMonth() && now.getDate() >= start.getDate());
 
-  if (!hasHadAnniversaryThisYear) {
+  if (!anniversary) {
     years -= 1;
   }
 
   return years;
-}
+};
 
 const PersonCard = ({ employee }) => {
-  const yearsEmployed = calculateYearsEmployed(employee.startDate);
+  const yearsWorked = yearCalculator(employee.startDate);
+  const dateDifference = new Date(employee.startDate) - new Date();
+  const monthDifference = dateDifference / (1000 * 60 * 60 * 24 * 30.44);
 
-  const monthsSinceStart =
-    (new Date() - new Date(employee.startDate)) / (1000 * 60 * 60 * 24 * 30.44);
+  let message = null;
 
-  let notification = null;
-
-  if (yearsEmployed > 0 && yearsEmployed % 5 === 0) {
-    notification = <p className="notification">🎉 Time to schedule a recognition meeting!</p>;
-  } else if (monthsSinceStart < 6) {
-    notification = <p className="notification">🔔 Probation review coming up soon.</p>;
+  if (yearsWorked > 0 && yearsWorked % 5 === 0) {
+    message = <p>🎉 Schedule recognition meeting.</p>;
+  } else if (monthDifference < 6) {
+    message = <p>🔔 Schedule probation review.</p>;
   }
 
   return (
     <div className="card">
       <h2 className="name">
-        {employee.name} {getAnimalEmoji(employee.animal)}
+        {employee.name} {animalEmoji(employee.animal)}
       </h2>
       <div className="card-para">
-        <p><strong>Title:</strong> {employee.title}</p>
-        <p><strong>Department:</strong> {employee.department}</p>
-        <p><strong>Years Employed:</strong> {yearsEmployed}</p>
-        {notification}
+        <p>
+          <strong>Title:</strong> {employee.title}
+        </p>
+        <p>
+          <strong>Department:</strong> {employee.department}
+        </p>
+        <p>
+          <strong>Years Worked:</strong> {yearsWorked}
+        </p>
 
-        <p><strong>Location:</strong> {employee.location}</p>
-        <p><strong>Email:</strong> {employee.email}</p>
-        <p><strong>Phone:</strong> {employee.phone}</p>
-        <p><strong>Salary:</strong> €{employee.salary}</p>
-        <p><strong>Skills:</strong> {employee.skills.join(', ')}</p>
+        {message}
+
+        <p>
+          <strong>Location:</strong> {employee.location}
+        </p>
+        <p>
+          <strong>Email:</strong> {employee.email}
+        </p>
+        <p>
+          <strong>Phone:</strong> {employee.phone}
+        </p>
+        <p>
+          <strong>Salary:</strong> €{employee.salary}
+        </p>
+        <p>
+          <strong>Skills:</strong> {employee.skills.join(', ')}
+        </p>
       </div>
     </div>
   );
