@@ -1,34 +1,49 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonCard from './PersonCard';
-
-const EmployeeDirectory = () => {
-  const [staffList, setStaffList] = useState([]);
-
-  useEffect(() => {
-    const loadStaff = async () => {
-      try {
-        const { data } = await axios.get('http://localhost:3001/employees');
-        setStaffList(data);
-      } catch (err) {
-        console.error('Could not retrieve employee data:', err);
-      }
+ 
+const PersonList = () => {
+    const [employees, setEmployees] = useState([]);
+ 
+   
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/employees');
+                setEmployees(response.data);
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
+        };
+ 
+        fetchEmployees();
+    }, []);
+ 
+    
+    const handleAddEmployee = (newEmployee) => {
+        setEmployees((prevEmployees) => [...prevEmployees, newEmployee]);
     };
-
-    loadStaff();
-  }, []);
-
-  const addEmployeeToList = (employee) => {
-    setStaffList((currentList) => [...currentList, employee]);
-  };
-
-  return (
-    <div className="container">
-      {staffList.map((person) => (
-        <PersonCard key={person.id} employee={person} />
-      ))}
-    </div>
-  );
+ 
+    
+    const handleUpdateEmployee = (updatedEmployee) => {
+        setEmployees((prevEmployees) =>
+            prevEmployees.map((emp) =>
+                emp.id === updatedEmployee.id ? updatedEmployee : emp
+            )
+        );
+    };
+ 
+    return (
+<div className="container">
+            {employees.map((employee) => (
+<PersonCard
+                    key={employee.id}
+                    employee={employee}
+                    onUpdate={handleUpdateEmployee}
+                />
+            ))}
+</div>
+    );
 };
-
-export default EmployeeDirectory;
+ 
+export default PersonList;

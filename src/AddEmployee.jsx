@@ -1,306 +1,99 @@
 import React, { useState } from 'react';
-
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 import './styles/AddEmployee.css';
- 
+
 const AddEmployee = ({ onAddEmployee }) => {
+  const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
 
-        name: '',
+  const initialFormState = {
+    name: '',
+    title: '',
+    salary: '',
+    phone: '',
+    email: '',
+    animal: '',
+    startDate: '',
+    location: '',
+    department: '',
+    skills: '',
+  };
 
-        title: '',
+  const [formData, setFormData] = useState(initialFormState);
 
-        salary: '',
 
-        phone: '',
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-        email: '',
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
-        animal: '',
+    const skillsList = formData.skills
+      .split(',')
+      .map((skill) => skill.trim())
+      .filter((skill) => skill);
 
-        startDate: '',
-
-        location: '',
-
-        department: '',
-
-        skills: '',
-
-    });
- 
-    const handleChange = (e) => {
-
-        const { name, value } = e.target;
-
-        setFormData({
-
-            ...formData,
-
-            [name]: value,
-
-        });
-
+    const newEmployee = {
+      ...formData,
+      id: Date.now(),
+      salary: parseFloat(formData.salary),
+      skills: skillsList,
     };
- 
-    const handleSubmit = async (e) => {
 
-        e.preventDefault();
- 
-        const skillsArray = formData.skills.split(',').map((skill) => skill.trim());
- 
-        const newEmployee = {
-
-            ...formData,
-
-            skills: skillsArray,
-
-            salary: parseFloat(formData.salary),
-
-            startDate: formData.startDate,
-
-            id: Date.now(),
-
-        };
- 
-        try {
-
-            await axios.post('http://localhost:3001/employees', newEmployee);
- 
-            onAddEmployee(newEmployee);
-
-            alert('Employee added successfully!');
-
-            setFormData({
-
-                name: '',
-
-                title: '',
-
-                salary: '',
-
-                phone: '',
-
-                email: '',
-
-                animal: '',
-
-                startDate: '',
-
-                location: '',
-
-                department: '',
-
-                skills: '',
-
-            });
-
-        } catch (error) {
-
-            console.error('Error adding employee:', error);
-
-            alert('There was an error adding the employee.');
-
-        }
-
-    };
- 
-    return (
-<div className="form-wrapper">
-<h2 className="form-title">Add New Employee</h2>
-<form className="employee-form" onSubmit={handleSubmit}>
-<div className="form-group">
-<label htmlFor="name">Name:</label>
-<input
-
-                        type="text"
-
-                        id="name"
-
-                        name="name"
-
-                        value={formData.name}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="title">Title:</label>
-<input
-
-                        type="text"
-
-                        id="title"
-
-                        name="title"
-
-                        value={formData.title}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="salary">Salary:</label>
-<input
-
-                        type="number"
-
-                        id="salary"
-
-                        name="salary"
-
-                        value={formData.salary}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="phone">Phone:</label>
-<input
-
-                        type="text"
-
-                        id="phone"
-
-                        name="phone"
-
-                        value={formData.phone}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="email">Email:</label>
-<input
-
-                        type="email"
-
-                        id="email"
-
-                        name="email"
-
-                        value={formData.email}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="animal">Animal:</label>
-<input
-
-                        type="text"
-
-                        id="animal"
-
-                        name="animal"
-
-                        value={formData.animal}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="startDate">Start Date:</label>
-<input
-
-                        type="date"
-
-                        id="startDate"
-
-                        name="startDate"
-
-                        value={formData.startDate}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="location">Location:</label>
-<input
-
-                        type="text"
-
-                        id="location"
-
-                        name="location"
-
-                        value={formData.location}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="department">Department:</label>
-<input
-
-                        type="text"
-
-                        id="department"
-
-                        name="department"
-
-                        value={formData.department}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
-<div className="form-group">
-<label htmlFor="skills">Skills (comma separated):</label>
-<input
-
-                        type="text"
-
-                        id="skills"
-
-                        name="skills"
-
-                        value={formData.skills}
-
-                        onChange={handleChange}
-
-                        required
-
-                    />
-</div>
- 
-                <button type="submit" className="submit-btn">
-
-                    Add Employee
-</button>
-</form>
-</div>
-
-    );
-
+    try {
+      await axios.post('http://localhost:3001/employees', newEmployee);
+      onAddEmployee(newEmployee);
+      setFormData(initialFormState);
+      navigate('/');
+    } catch (error) {
+      console.error('Error adding employee:', error);
+      alert('❌ Failed to add employee. Please try again.');
+    }
+  };
+
+
+  const formFields = [
+    { label: 'Name', name: 'name', type: 'text' },
+    { label: 'Title', name: 'title', type: 'text' },
+    { label: 'Salary (€)', name: 'salary', type: 'number' },
+    { label: 'Phone', name: 'phone', type: 'text' },
+    { label: 'Email', name: 'email', type: 'email' },
+    { label: 'Favorite Animal', name: 'animal', type: 'text' },
+    { label: 'Start Date', name: 'startDate', type: 'date' },
+    { label: 'Location', name: 'location', type: 'text' },
+    { label: 'Department', name: 'department', type: 'text' },
+    { label: 'Skills (comma-separated)', name: 'skills', type: 'text' },
+  ];
+
+  return (
+    <div className="form-wrapper">
+      <h2 className="form-title">Add New Employee</h2>
+      <form className="employee-form" onSubmit={handleFormSubmit}>
+        {formFields.map(({ label, name, type }) => (
+          <div className="form-group" key={name}>
+            <label htmlFor={name}>{label}:</label>
+            <input
+              type={type}
+              id={name}
+              name={name}
+              value={formData[name]}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        ))}
+        <button type="submit" className="submit-btn">
+          ➕ Add Employee
+        </button>
+      </form>
+    </div>
+  );
 };
- 
+
 export default AddEmployee;
- 

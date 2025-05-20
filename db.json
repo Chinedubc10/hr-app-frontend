@@ -1,135 +1,189 @@
 {
-    "employees": [
-      {
-        "id": 1,
-        "name": "Helmi Korpi",
-        "title": "HR Manager",
-        "salary": 4200,
-        "phone": "040-1234567",
-        "email": "helmi.korpi@example.com",
-        "animal": "Panther",
-        "startDate": "2018-04-01",
-        "location": "Helsinki",
-        "department": "Human Resources",
-        "skills": ["Recruiting", "Communication", "Employee Relations"]
-      },
-      {
-        "id": 2,
-        "name": "Eero Vainio",
-        "title": "Software Developer",
-        "salary": 5200,
-        "phone": "045-7654321",
-        "email": "eero.vainio@example.com",
-        "animal": "Koala",
-        "startDate": "2019-08-15",
-        "location": "Espoo",
-        "department": "IT",
-        "skills": ["JavaScript", "React", "Node.js"]
-      },
-      {
-        "id": 3,
-        "name": "Sanni Miettinen",
-        "title": "Marketing Specialist",
-        "salary": 3900,
-        "phone": "050-9876543",
-        "email": "sanni.miettinen@example.com",
-        "animal": "Parrot",
-        "startDate": "2020-02-10",
-        "location": "Tampere",
-        "department": "Marketing",
-        "skills": ["SEO", "Content Creation", "Analytics"]
-      },
-      {
-        "id": 4,
-        "name": "Jarmo Lehtinen",
-        "title": "Project Manager",
-        "salary": 4700,
-        "phone": "040-6543210",
-        "email": "jarmo.lehtinen@example.com",
-        "animal": "Bear",
-        "startDate": "2017-06-20",
-        "location": "Vantaa",
-        "department": "Operations",
-        "skills": ["Leadership", "Budgeting", "Scheduling"]
-      },
-      {
-        "id": 5,
-        "name": "Aada Mäkelä",
-        "title": "UI/UX Designer",
-        "salary": 4400,
-        "phone": "041-2345678",
-        "email": "aada.makela@example.com",
-        "animal": "Otter",
-        "startDate": "2021-01-05",
-        "location": "Helsinki",
-        "department": "Design",
-        "skills": ["Figma", "User Research", "Prototyping"]
-      },
-      {
-        "id": 6,
-        "name": "Veikko Kettunen",
-        "title": "Cyber Security Analyst",
-        "salary": 5800,
-        "phone": "046-2233445",
-        "email": "veikko.kettunen@example.com",
-        "animal": "Lynx",
-        "startDate": "2016-11-11",
-        "location": "Oulu",
-        "department": "IT Security",
-        "skills": ["Network Security", "Penetration Testing", "Risk Analysis"]
-      },
-      {
-        "id": 7,
-        "name": "Laura Peltonen",
-        "title": "Accountant",
-        "salary": 4000,
-        "phone": "050-1122334",
-        "email": "laura.peltonen@example.com",
-        "animal": "Rabbit",
-        "startDate": "2015-03-03",
-        "location": "Turku",
-        "department": "Finance",
-        "skills": ["Bookkeeping", "Tax Reporting", "Excel"]
-      },
-      {
-        "id": 8,
-        "name": "Antti Salmi",
-        "title": "Data Analyst",
-        "salary": 4900,
-        "phone": "044-6677889",
-        "email": "antti.salmi@example.com",
-        "animal": "Walrus",
-        "startDate": "2022-09-01",
-        "location": "Jyväskylä",
-        "department": "Business Intelligence",
-        "skills": ["SQL", "Power BI", "Python"]
-      },
-      {
-        "id": 9,
-        "name": "Essi Niemelä",
-        "title": "Legal Advisor",
-        "salary": 6100,
-        "phone": "043-3344556",
-        "email": "essi.niemela@example.com",
-        "animal": "Tortoise",
-        "startDate": "2014-10-23",
-        "location": "Helsinki",
-        "department": "Legal",
-        "skills": ["Contract Law", "Compliance", "Negotiation"]
-      },
-      {
-        "id": 10,
-        "name": "Joni Laaksonen",
-        "title": "Sales Manager",
-        "salary": 4600,
-        "phone": "049-9988776",
-        "email": "joni.laaksonen@example.com",
-        "animal": "Flamingo",
-        "startDate": "2019-05-30",
-        "location": "Lahti",
-        "department": "Sales",
-        "skills": ["CRM", "B2B Sales", "Strategy"]
-      }
-    ]
-  }
-  
+  "employees": [
+    {
+      "id": "1",
+      "name": "Helmi Korpi",
+      "title": "HR Manager",
+      "salary": 4200,
+      "phone": "040-1234567",
+      "email": "helmi.korpi@example.com",
+      "animal": "Panther",
+      "startDate": "2018-04-01",
+      "location": "Helsink",
+      "department": "Human Resources",
+      "skills": [
+        "Recruiting",
+        "Communication",
+        "Employee Relations"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Eero Vainio",
+      "title": "Software Developer",
+      "salary": 5200,
+      "phone": "045-7654321",
+      "email": "eero.vainio@example.com",
+      "animal": "Koala",
+      "startDate": "2019-08-15",
+      "location": "Espoo",
+      "department": "IT",
+      "skills": [
+        "JavaScript",
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Sanni Miettinen",
+      "title": "Marketing Specialist",
+      "salary": 3900,
+      "phone": "050-9876543",
+      "email": "sanni.miettinen@example.com",
+      "animal": "Parrot",
+      "startDate": "2020-02-10",
+      "location": "Tampere",
+      "department": "Marketing",
+      "skills": [
+        "SEO",
+        "Content Creation",
+        "Analytics"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Jarmo Lehtinen",
+      "title": "Project Manager",
+      "salary": 4700,
+      "phone": "040-6543210",
+      "email": "jarmo.lehtinen@example.com",
+      "animal": "Bear",
+      "startDate": "2017-06-20",
+      "location": "Vantaa",
+      "department": "Operations",
+      "skills": [
+        "Leadership",
+        "Budgeting",
+        "Scheduling"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Aada Mäkelä",
+      "title": "UI/UX Designer",
+      "salary": 4400,
+      "phone": "041-2345678",
+      "email": "aada.makela@example.com",
+      "animal": "Otter",
+      "startDate": "2021-01-05",
+      "location": "Helsinki",
+      "department": "Design",
+      "skills": [
+        "Figma",
+        "User Research",
+        "Prototyping"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Veikko Kettunen",
+      "title": "Cyber Security Analyst",
+      "salary": 5800,
+      "phone": "046-2233445",
+      "email": "veikko.kettunen@example.com",
+      "animal": "Lynx",
+      "startDate": "2016-11-11",
+      "location": "Oulu",
+      "department": "IT Security",
+      "skills": [
+        "Network Security",
+        "Penetration Testing",
+        "Risk Analysis"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Laura Peltonen",
+      "title": "Accountant",
+      "salary": 4000,
+      "phone": "050-1122334",
+      "email": "laura.peltonen@example.com",
+      "animal": "Rabbit",
+      "startDate": "2015-03-03",
+      "location": "Turku",
+      "department": "Finance",
+      "skills": [
+        "Bookkeeping",
+        "Tax Reporting",
+        "Excel"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Antti Salmi",
+      "title": "Data Analyst",
+      "salary": 4900,
+      "phone": "044-6677889",
+      "email": "antti.salmi@example.com",
+      "animal": "Walrus",
+      "startDate": "2022-09-01",
+      "location": "Jyväskylä",
+      "department": "Business Intelligence",
+      "skills": [
+        "SQL",
+        "Power BI",
+        "Python"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Essi Niemelä",
+      "title": "Legal Advisor",
+      "salary": 6100,
+      "phone": "043-3344556",
+      "email": "essi.niemela@example.com",
+      "animal": "Tortoise",
+      "startDate": "2014-10-23",
+      "location": "Helsinki",
+      "department": "Legal",
+      "skills": [
+        "Contract Law",
+        "Compliance",
+        "Negotiation"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Joni Laaksonen",
+      "title": "Sales Manager",
+      "salary": 4600,
+      "phone": "049-9988776",
+      "email": "joni.laaksonen@example.com",
+      "animal": "Flamingo",
+      "startDate": "2019-05-30",
+      "location": "Lahti",
+      "department": "Sales",
+      "skills": [
+        "CRM",
+        "B2B Sales",
+        "Strategy"
+      ]
+    },
+    {
+      "id": "1747741143987",
+      "name": "Chinedu Ohaegbulam",
+      "title": "Mr",
+      "salary": 4435,
+      "phone": "0404449232",
+      "email": "nedumilan@yahoo.com",
+      "animal": "Elephant",
+      "startDate": "2025-05-14",
+      "location": "Helsinki",
+      "department": "Web Develpment",
+      "skills": [
+        "Hand"
+      ]
+    }
+  ]
+}
