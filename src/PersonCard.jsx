@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 const getAnimalEmoji = (animal) => {
   const emojis = {
-    Panther: '🐆',
-    Koala: '🐨',
-    Parrot: '🦜',
-    Otter: '🦦',
-    Lynx: '🐈‍⬛',
-    Walrus: '🦭',
-    Tortoise: '🐢',
-    Flamingo: '🦩',
-    Meerkat: '🦫',
-    Llama: '🦙'
+    Panther: "🐆",
+    Koala: "🐨",
+    Parrot: "🦜",
+    Otter: "🦦",
+    Lynx: "🐈‍⬛",
+    Walrus: "🦭",
+    Tortoise: "🐢",
+    Flamingo: "🦩",
+    Meerkat: "🦫",
+    Llama: "🦙",
   };
-  return emojis[animal] || '🐾';
+  return emojis[animal] || "🐾";
 };
 
 const calculateYearsWorked = (startDate) => {
@@ -24,24 +24,26 @@ const calculateYearsWorked = (startDate) => {
   let years = today.getFullYear() - start.getFullYear();
   const hasAnniversaryPassed =
     today.getMonth() > start.getMonth() ||
-    (today.getMonth() === start.getMonth() && today.getDate() >= start.getDate());
+    (today.getMonth() === start.getMonth() &&
+      today.getDate() >= start.getDate());
 
   return hasAnniversaryPassed ? years : years - 1;
 };
 
 const PersonCard = ({ employee, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [statusMessage, setStatusMessage] = useState('');
+  const [statusMessage, setStatusMessage] = useState("");
 
   const [formData, setFormData] = useState({
     salary: employee.salary,
     location: employee.location,
     department: employee.department,
-    skills: employee.skills.join(', ')
+    skills: employee.skills.join(", "),
   });
 
   const yearsWorked = calculateYearsWorked(employee.startDate);
-  const monthsSinceStart = (new Date() - new Date(employee.startDate)) / (1000 * 60 * 60 * 24 * 30.44);
+  const monthsSinceStart =
+    (new Date() - new Date(employee.startDate)) / (1000 * 60 * 60 * 24 * 30.44);
 
   const reminderMessage =
     yearsWorked > 0 && yearsWorked % 5 === 0 ? (
@@ -57,7 +59,7 @@ const PersonCard = ({ employee, onUpdate }) => {
 
   const showTemporaryMessage = (message) => {
     setStatusMessage(message);
-    setTimeout(() => setStatusMessage(''), 3000);
+    setTimeout(() => setStatusMessage(""), 3000);
   };
 
   const handleSave = async () => {
@@ -65,16 +67,19 @@ const PersonCard = ({ employee, onUpdate }) => {
       salary: Number(formData.salary),
       location: formData.location,
       department: formData.department,
-      skills: formData.skills.split(',').map((skill) => skill.trim())
+      skills: formData.skills.split(",").map((skill) => skill.trim()),
     };
 
     try {
-      const response = await axios.patch(`http://localhost:3001/employees/${employee.id}`, updatedEmployee);
+      const response = await axios.patch(
+        `https://hr-app-backend-b85w.onrender.com/employees/${employee.id}`,
+        updatedEmployee
+      );
       onUpdate(response.data);
       setIsEditing(false);
-      showTemporaryMessage('Changes saved!');
+      showTemporaryMessage("Changes saved!");
     } catch (err) {
-      console.error('Error saving changes:', err);
+      console.error("Error saving changes:", err);
     }
   };
 
@@ -83,7 +88,7 @@ const PersonCard = ({ employee, onUpdate }) => {
       salary: employee.salary,
       location: employee.location,
       department: employee.department,
-      skills: employee.skills.join(', ')
+      skills: employee.skills.join(", "),
     });
   };
 
@@ -94,28 +99,41 @@ const PersonCard = ({ employee, onUpdate }) => {
       </h2>
 
       <div className="card-para">
-        <p><strong>Title:</strong> {employee.title}</p>
-        <p><strong>Department:</strong> {employee.department}</p>
-        <p><strong>Years Worked:</strong> {yearsWorked}</p>
+        <p>
+          <strong>Title:</strong> {employee.title}
+        </p>
+        <p>
+          <strong>Department:</strong> {employee.department}
+        </p>
+        <p>
+          <strong>Years Worked:</strong> {yearsWorked}
+        </p>
 
         {reminderMessage}
 
         <div className="button-row">
-          <button
-            className="edit-btn"
-            onClick={() => setIsEditing(true)}
-          >
+          <button className="edit-btn" onClick={() => setIsEditing(true)}>
             ✏️ Edit
           </button>
         </div>
 
         {!isEditing ? (
           <>
-            <p><strong>Location:</strong> {employee.location}</p>
-            <p><strong>Email:</strong> {employee.email}</p>
-            <p><strong>Phone:</strong> {employee.phone}</p>
-            <p><strong>Salary:</strong> €{employee.salary}</p>
-            <p><strong>Skills:</strong> {employee.skills.join(', ')}</p>
+            <p>
+              <strong>Location:</strong> {employee.location}
+            </p>
+            <p>
+              <strong>Email:</strong> {employee.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {employee.phone}
+            </p>
+            <p>
+              <strong>Salary:</strong> €{employee.salary}
+            </p>
+            <p>
+              <strong>Skills:</strong> {employee.skills.join(", ")}
+            </p>
           </>
         ) : (
           <div className="edit-form">
@@ -149,8 +167,12 @@ const PersonCard = ({ employee, onUpdate }) => {
             />
 
             <div className="edit-buttons">
-              <button className="save-btn" onClick={handleSave}>✅ Save</button>
-              <button className="cancel-btn" onClick={handleCancel}>❌ Cancel</button>
+              <button className="save-btn" onClick={handleSave}>
+                ✅ Save
+              </button>
+              <button className="cancel-btn" onClick={handleCancel}>
+                ❌ Cancel
+              </button>
             </div>
           </div>
         )}
@@ -158,9 +180,9 @@ const PersonCard = ({ employee, onUpdate }) => {
         {statusMessage && (
           <p
             style={{
-              color: statusMessage.includes('✅') ? 'green' : 'red',
-              fontWeight: 'bold',
-              marginTop: '10px'
+              color: statusMessage.includes("✅") ? "green" : "red",
+              fontWeight: "bold",
+              marginTop: "10px",
             }}
           >
             {statusMessage}

@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './styles/AddEmployee.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./styles/AddEmployee.css";
 
 const AddEmployee = ({ onAddEmployee }) => {
   const navigate = useNavigate();
 
-
   const initialFormState = {
-    name: '',
-    title: '',
-    salary: '',
-    phone: '',
-    email: '',
-    animal: '',
-    startDate: '',
-    location: '',
-    department: '',
-    skills: '',
+    name: "",
+    title: "",
+    salary: "",
+    phone: "",
+    email: "",
+    animal: "",
+    startDate: "",
+    location: "",
+    department: "",
+    skills: "",
   };
 
   const [formData, setFormData] = useState(initialFormState);
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +33,7 @@ const AddEmployee = ({ onAddEmployee }) => {
     e.preventDefault();
 
     const skillsList = formData.skills
-      .split(',')
+      .split(",")
       .map((skill) => skill.trim())
       .filter((skill) => skill);
 
@@ -47,28 +45,30 @@ const AddEmployee = ({ onAddEmployee }) => {
     };
 
     try {
-      await axios.post('http://localhost:3001/employees', newEmployee);
+      await axios.post(
+        "https://hr-app-backend-b85w.onrender.com/employees",
+        newEmployee
+      );
       onAddEmployee(newEmployee);
       setFormData(initialFormState);
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Error adding employee:', error);
-      alert('❌ Failed to add employee. Please try again.');
+      console.error("Error adding employee:", error);
+      alert("❌ Failed to add employee. Please try again.");
     }
   };
 
-
   const formFields = [
-    { label: 'Name', name: 'name', type: 'text' },
-    { label: 'Title', name: 'title', type: 'text' },
-    { label: 'Salary (€)', name: 'salary', type: 'number' },
-    { label: 'Phone', name: 'phone', type: 'text' },
-    { label: 'Email', name: 'email', type: 'email' },
-    { label: 'Favorite Animal', name: 'animal', type: 'text' },
-    { label: 'Start Date', name: 'startDate', type: 'date' },
-    { label: 'Location', name: 'location', type: 'text' },
-    { label: 'Department', name: 'department', type: 'text' },
-    { label: 'Skills (comma-separated)', name: 'skills', type: 'text' },
+    { label: "Name", name: "name", type: "text" },
+    { label: "Title", name: "title", type: "text" },
+    { label: "Salary (€)", name: "salary", type: "number" },
+    { label: "Phone", name: "phone", type: "text" },
+    { label: "Email", name: "email", type: "email" },
+    { label: "Favorite Animal", name: "animal", type: "text" },
+    { label: "Start Date", name: "startDate", type: "date" },
+    { label: "Location", name: "location", type: "text" },
+    { label: "Department", name: "department", type: "text" },
+    { label: "Skills (comma-separated)", name: "skills", type: "text" },
   ];
 
   return (
