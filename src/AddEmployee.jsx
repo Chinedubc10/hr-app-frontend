@@ -44,6 +44,7 @@ const AddEmployee = ({ onAddEmployee }) => {
       skills: skillsList,
     };
 
+    console.log(newEmployee);
     try {
       await axios.post(
         "https://hr-app-backend-b85w.onrender.com/employees",
