@@ -1,4 +1,6 @@
 footer {
   height: 50px;
   background-color: #333;
+  background-color: red;
+  color: yellow;
 }
