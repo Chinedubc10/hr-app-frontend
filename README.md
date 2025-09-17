@@ -64,4 +64,4 @@ It demonstrates the use of React components, CSS styling, and modern JavaScript 
   - Ensured that price updates are reflected in the UI in real-time.
   - 
 
-  [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Chinedubc10_hr-app-frontend)](https://sonarcloud.io/summary/new_code?id=Chinedubc10_hr-app-frontend)
+ - setting up Sonar Cloud badge
