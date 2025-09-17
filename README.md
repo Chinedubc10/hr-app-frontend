@@ -62,3 +62,6 @@ It demonstrates the use of React components, CSS styling, and modern JavaScript 
   - Introduced a new function in the `BookList` component to handle price changes.
   - Updated the `BookCard` component to display the updated price.
   - Ensured that price updates are reflected in the UI in real-time.
+  - 
+
+  [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Chinedubc10_hr-app-frontend)](https://sonarcloud.io/summary/new_code?id=Chinedubc10_hr-app-frontend)
